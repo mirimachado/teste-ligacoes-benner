@@ -1,5 +1,3 @@
-using System.Collections;
-
 namespace TaskBennerSistemas;
 
 public class Network  
@@ -8,7 +6,8 @@ public class Network
     private int number { get; set; }
     private List<int> values = new List<int>();
     public List<int[]> directConnections = new List<int[]>() ; 
-    private List<int> indirectConnections = new List<int>(); 
+    private List<List<int>> indirectConnections = new List<List<int>>(); 
+    
     
     public Network(int number) {
         if (Decimal.IsNegative(number)) { 
@@ -44,12 +43,16 @@ public class Network
                 int[] x = directConnections[i];
                 foreach (var v in directConnections) {
                     if (v != x) {
-                        
                         if (v[0] == x[0] || v[0] == x[1] || v[1] == x[0] || v[1] == x[1]) {
-                            indirectConnections.Add(v[0]);
-                            indirectConnections.Add(v[1]);
-                            indirectConnections.Add(x[0]);
-                            indirectConnections.Add(x[1]); 
+                            
+                            List<int> connections = new List<int>();
+                            
+                            connections.Add(v[0]);
+                            connections.Add(v[1]);
+                            connections.Add(x[0]);
+                            connections.Add(x[1]);
+                            indirectConnections.Add(connections);
+                            
                         }
                     }
                 }
@@ -72,10 +75,34 @@ public class Network
                     return true;
                 }
             }
-            if (indirectConnections.Contains(numberOne) && indirectConnections.Contains(numberTwo)) {
-                return true;
+
+            for (int i = 0; i < indirectConnections.Count; i++) {
+                
+                List<int> x = indirectConnections[i];
+                foreach (var list in indirectConnections) {
+                    if (list != x) {
+                        
+                        for (int j = 0; j < indirectConnections[j].Count; j++) {   
+                            if (list.Contains(x[j])) {
+                                List<int> newConnections = new List<int>();
+                                newConnections.AddRange(list);
+                                newConnections.Add(x[j]);
+
+                                if (newConnections.Contains(numberOne) && newConnections.Contains(numberTwo)) {
+                                    return true;
+                                }
+                                
+                            }
+                            
+                        }
+                    
+                    }
+                    
+                }
             }
         }
+        
+        
         if (!values.Contains(numberOne) && !values.Contains(numberTwo)) {
             throw new Exception("Os dois números informados precisam existir no conjunto. Tente novamente com números válidos.");
         }
