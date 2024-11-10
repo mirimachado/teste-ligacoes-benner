@@ -3,12 +3,12 @@
 Console.WriteLine("Bem-vindo (a) ao Programa de Conexões: ");
 Console.WriteLine("Digite um número para o tamanho do conjunto: ");
 int numberSize = int.Parse(Console.ReadLine());
-Network network = new Network(numberSize);
+Network network = new Network(numberSize); 
 
-Boolean runProgram = true;
-Boolean runProgramB = true;
+bool runProgramA = true;
+bool runProgramB = true;
 
-while (runProgram) {
+while (runProgramA) {
     Console.WriteLine("Digite dois números para realizar uma conexão. ");
     Console.WriteLine("Primeiro número: ");
     int firstNumber = int.Parse(Console.ReadLine());
@@ -19,21 +19,20 @@ while (runProgram) {
     string option = Console.ReadLine();
   
     if (option == "F") {
-        runProgram = false;
+        runProgramA = false;
         while (runProgramB) {
-            
             Console.WriteLine("Por favor, agora digite dois números para verificar se há uma conexão direta ou indireta entre eles: ");
             Console.WriteLine("Primeiro número: ");
             int firstNumberVerification = int.Parse(Console.ReadLine()); 
             Console.WriteLine("Segundo número: ");
-        
+         
             int secondNumberVerification = int.Parse(Console.ReadLine());
-            Boolean result = network.Query(firstNumberVerification, secondNumberVerification);
+            bool result = network.Query(firstNumberVerification, secondNumberVerification);
             Console.WriteLine("Resultado da verificação entre os números (True: há conexão direta ou indireta - False: não há conexão.): " + result);
-            Console.WriteLine("Deseja continuar realizando verificações de conexões? Digite C para continuar ou E para encerrar o programa.");
+            Console.WriteLine("Deseja continuar realizando verificações de conexões? Digite C para continuar ou F para finalizar o programa.");
             string optionB = Console.ReadLine();
 
-            if (optionB == "E") {
+            if (optionB == "F") {
                 runProgramB = false;
                 Console.WriteLine("Obrigada, até breve. Encerrando o programa... ");
             }
